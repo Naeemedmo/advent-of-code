@@ -70,6 +70,6 @@ fn main() {
             sum_score_part2 += score_part2;
         }
     }
-    println!("Match result {}", sum_score);
+    println!(  "Match result {}", sum_score);
     println!("Match result Part2 {}", sum_score_part2);
 }
