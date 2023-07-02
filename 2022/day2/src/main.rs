@@ -62,14 +62,14 @@ fn main() {
     for line in content.lines() {
         if !line.is_empty() {
             let result: Vec<&str> = line.split(' ').collect();
-            let elf_choice: &u32 = elf_result.get(&result[0]).unwrap_or(&0);
-            let my_choice: &u32 = my_result.get(&result[1]).unwrap_or(&0);
+            let elf_choice = elf_result.get(&result[0]).unwrap();
+            let my_choice = my_result.get(&result[1]).unwrap();
             let score: u32 = match_result(*elf_choice, *my_choice);
             let score_part2: u32 = inverse_match_result(&result[1].to_string(), *elf_choice);
             sum_score += score;
             sum_score_part2 += score_part2;
         }
     }
-    println!(  "Match result {}", sum_score);
+    println!("Match result {}", sum_score);
     println!("Match result Part2 {}", sum_score_part2);
 }
