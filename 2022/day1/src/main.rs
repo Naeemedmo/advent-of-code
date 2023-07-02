@@ -1,9 +1,8 @@
 use std::env;
 extern crate input_extractor;
-use input_extractor::get::get_input;
 use input_extractor::build::build_cookie;
 use input_extractor::build::build_url;
-
+use input_extractor::get::get_input;
 
 fn main() {
     let year: i32 = 2022;
@@ -26,7 +25,7 @@ fn main() {
     }
     let max_value = *elves.iter().max().unwrap();
     let index = elves.iter().position(|&r| r == max_value).unwrap();
-    println!( "Elf number {} with max calories {}", index, max_value );
+    println!("Elf number {} with max calories {}", index, max_value);
     elves.sort_by(|a, b| b.cmp(a));
-    println!( "Sum top 3 elves {}", elves[0] + elves[1] + elves[2] );
+    println!("Sum top 3 elves {}", elves[0] + elves[1] + elves[2]);
 }
