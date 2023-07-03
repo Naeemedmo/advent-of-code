@@ -1,8 +1,4 @@
-use std::env;
-extern crate input_extractor;
-use input_extractor::build::build_cookie;
-use input_extractor::build::build_url;
-use input_extractor::get::get_input;
+use input_extractor::get::{get_input, AoCDate};
 
 const ASCII_LOWER: [char; 26] = [
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
@@ -15,13 +11,7 @@ const ASCII_UPPER: [char; 26] = [
 ];
 
 fn main() {
-    let year: i32 = 2022;
-    let day: i32 = 3;
-    let input_url = build_url(&year, &day);
-    let cookie = env::var("AOC_SESSION_COOKIE").expect("Error: AOC_SESSION_COOKIE must be set!");
-    let session_cookie = build_cookie(&cookie);
-
-    let content = get_input(&input_url, &session_cookie);
+    let content = get_input(AoCDate { year: 2022, day: 3 });
 
     let mut sum_priority: u32 = 0;
     for line in content.lines() {

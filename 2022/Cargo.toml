@@ -1,9 +1,13 @@
 [package]
-name = "day1"
+name = "AdventOfCodeRust"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-input-extractor = { path = "../input-extractor" }
+curl = "0.4.44"
+
+[lib]
+name = "input_extractor"
+path = "src/lib/lib.rs"

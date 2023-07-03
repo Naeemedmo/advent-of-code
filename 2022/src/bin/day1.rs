@@ -1,17 +1,7 @@
-use std::env;
-extern crate input_extractor;
-use input_extractor::build::build_cookie;
-use input_extractor::build::build_url;
-use input_extractor::get::get_input;
+use input_extractor::get::{get_input, AoCDate};
 
 fn main() {
-    let year: i32 = 2022;
-    let day: i32 = 1;
-    let input_url = build_url(&year, &day);
-    let cookie = env::var("AOC_SESSION_COOKIE").expect("Error: AOC_SESSION_COOKIE must be set!");
-    let session_cookie = build_cookie(&cookie);
-
-    let content = get_input(&input_url, &session_cookie);
+    let content = get_input(AoCDate { year: 2022, day: 1 });
     let mut elves = Vec::new();
     let mut sum_calories: i32 = 0;
 
