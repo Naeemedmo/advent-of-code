@@ -3,7 +3,7 @@ use std::collections::HashMap;
 
 const fn next(index: u32) -> u32 {
     const NEXT_ELEMENT: [u32; 3] = [2, 3, 1];
-    return NEXT_ELEMENT[(index - 1) as usize];
+    NEXT_ELEMENT[(index - 1) as usize]
 }
 
 fn match_result(elf_choice: u32, my_choice: u32) -> u32 {
@@ -16,7 +16,7 @@ fn match_result(elf_choice: u32, my_choice: u32) -> u32 {
     if next(elf_choice) == my_choice {
         return my_choice + 6;
     }
-    return my_choice;
+    my_choice
 }
 
 fn inverse_match_result(outcome: &str, elf_choice: u32) -> u32 {
@@ -30,7 +30,7 @@ fn inverse_match_result(outcome: &str, elf_choice: u32) -> u32 {
     if outcome == "Z" {
         return winning_choice + 6;
     }
-    return next(winning_choice);
+    next(winning_choice)
 }
 
 fn main() {
@@ -56,7 +56,7 @@ fn main() {
             let elf_choice = elf_result.get(&result[0]).unwrap();
             let my_choice = my_result.get(&result[1]).unwrap();
             let score: u32 = match_result(*elf_choice, *my_choice);
-            let score_part2: u32 = inverse_match_result(&result[1].to_string(), *elf_choice);
+            let score_part2: u32 = inverse_match_result(result[1], *elf_choice);
             sum_score += score;
             sum_score_part2 += score_part2;
         }

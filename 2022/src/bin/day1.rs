@@ -13,8 +13,8 @@ fn benchmark_one(content: &str) -> (i32, i32) {
         })
         .k_smallest(3);
     let max_calories: i32 = -elves.clone().take(1).sum::<i32>();
-    let sum_top_three: i32 = -elves.clone().take(3).sum::<i32>();
-    return (max_calories, sum_top_three);
+    let sum_top_three: i32 = -elves.take(3).sum::<i32>();
+    (max_calories, sum_top_three)
 }
 
 fn benchmark_two(content: &str) -> (i32, i32) {
@@ -29,8 +29,8 @@ fn benchmark_two(content: &str) -> (i32, i32) {
         .sorted()
         .rev();
     let max_calories: i32 = elves.clone().take(1).sum::<i32>();
-    let sum_top_three: i32 = elves.clone().take(3).sum::<i32>();
-    return (max_calories, sum_top_three);
+    let sum_top_three: i32 = elves.take(3).sum::<i32>();
+    (max_calories, sum_top_three)
 }
 
 fn benchmark_base(content: &str) -> (i32, i32) {
@@ -48,7 +48,7 @@ fn benchmark_base(content: &str) -> (i32, i32) {
     elves.sort_by(|a, b| b.cmp(a));
     let max_calories = elves[0];
     let sum_top_three = elves[0] + elves[1] + elves[2];
-    return (max_calories, sum_top_three);
+    (max_calories, sum_top_three)
 }
 
 fn main() {

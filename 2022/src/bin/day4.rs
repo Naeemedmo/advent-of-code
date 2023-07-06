@@ -25,7 +25,7 @@ fn benchmark_base(content: &str, re: &Regex) -> (u32, u32) {
             number_overlap += 1
         }
     }
-    return (number_matches, number_overlap);
+    (number_matches, number_overlap)
 }
 
 fn benchmark_one(content: &str, re: &Regex) -> (u32, u32) {
@@ -37,7 +37,7 @@ fn benchmark_one(content: &str, re: &Regex) -> (u32, u32) {
             .map(|m| m.as_str().parse::<i32>().unwrap())
             .collect_tuple()
         {
-            let overlap = (b.min(d) - a.max(c));
+            let overlap = b.min(d) - a.max(c);
             number_matches += if overlap == (b - a) || overlap == (d - c) {
                 1
             } else {
@@ -48,7 +48,7 @@ fn benchmark_one(content: &str, re: &Regex) -> (u32, u32) {
             panic!();
         }
     }
-    return (number_matches, number_overlap);
+    (number_matches, number_overlap)
 }
 
 fn main() {

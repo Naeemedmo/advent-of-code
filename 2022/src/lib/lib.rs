@@ -29,14 +29,14 @@ pub mod get {
         assert_eq!(easy.response_code().unwrap(), 200);
         let contents = easy.get_ref();
 
-        return String::from_utf8_lossy(&contents.0).to_string();
+        String::from_utf8_lossy(&contents.0).to_string()
     }
 }
 pub mod build {
     pub fn build_url(year: u32, day: u32) -> String {
-        return format!("https://adventofcode.com/{}/day/{}/input", year, day);
+        format!("https://adventofcode.com/{}/day/{}/input", year, day)
     }
     pub fn build_cookie(cookie: &str) -> String {
-        return format!("session={}", cookie);
+        format!("session={}", cookie)
     }
 }
