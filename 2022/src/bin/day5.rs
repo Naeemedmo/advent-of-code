@@ -78,7 +78,6 @@ fn main() {
 
             let mut tail = crate_matrix_part2[from - 1].split_off(length - value);
             crate_matrix_part2[to - 1].append(&mut tail);
-
         }
     }
     let mut result: String = "".to_owned();
