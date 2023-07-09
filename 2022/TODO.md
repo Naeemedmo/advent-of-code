@@ -1,0 +1,2 @@
+- Day 3: improve the ascii constants
+- Day 5: implement a 1d instead of 2d
