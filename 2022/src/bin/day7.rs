@@ -8,7 +8,7 @@ pub struct FileInfo {
 
 impl FileInfo {
     fn new(name: String, size: i32) -> Self {
-        FileInfo {name, size}
+        FileInfo { name, size }
     }
 
     fn get_parent(&self, name: &str) -> Option<String> {
