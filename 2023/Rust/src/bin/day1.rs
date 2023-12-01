@@ -2,36 +2,40 @@ use input_extractor::get::{get_input, AoCDate};
 extern crate regex;
 use regex::{Captures, Regex};
 
-fn get_calibration_value(signal: &str) -> u32 {
+fn get_first_last(signal: &str) -> (u32, u32) {
     const RADIX: u32 = 10;
 
     let only_digit: String = signal.chars().filter(|c| c.is_digit(10)).collect();
     let first: u32 = only_digit.chars().nth(0).unwrap().to_digit(RADIX).unwrap();
     let last: u32 = only_digit.chars().last().unwrap().to_digit(RADIX).unwrap();
-    first * 10 + last
+    (first, last)
 }
 
-fn replace_string_with_numbers(line: &str) -> String {
-    // ugly pattern because regex is left-to-right
-    let pattern = "(twone|fiveight|oneight|threeight|nineight|eightwo|eighthree|one|two|three|four|five|six|seven|eight|nine)";
-    let re = Regex::new(pattern).unwrap();
-    let replaced_line = re.replace_all(line, |cap: &Captures| {
-        match &cap[0] {
-            "oneight" => "18",
+
+fn reverse_string(input: &str) -> String {
+    input.chars().rev().collect::<String>()
+}
+
+fn copy_string(input: &str) -> String {
+    input.to_string()
+}
+
+
+fn replace_string_with_numbers(line: &str, action: impl Fn(&str) -> String ) -> String {
+
+    let pattern = format!("({})", action("one|two|three|four|five|six|seven|eight|nine"));
+
+    let re = Regex::new(&pattern).unwrap();
+    let replaced_line = re.replace_all(&action(line), |cap: &Captures| {
+        match action(&cap[0]).as_str() {
             "one" => "1",
-            "twone" => "21",
             "two" => "2",
-            "threeight" => "38",
             "three" => "3",
             "four" => "4",
-            "fiveight" => "58",
             "five" => "5",
             "six" => "6",
             "seven" => "7",
-            "eightwo" => "82",
-            "eighthree" => "83",
             "eight" => "8",
-            "nineight" => "98",
             "nine" => "9",
             _ => panic!("We should never get here!"),
         }
@@ -46,8 +50,8 @@ fn main() {
 
     for line in content.lines() {
         // First remove all non digits
-        let calibration_value: u32 = get_calibration_value(line);
-        sum_part1 += calibration_value;
+        let (first, last)= get_first_last(line);
+        sum_part1 += first * 10 + last;
     }
     println!("Sum Part 1 {}", sum_part1);
 
@@ -55,9 +59,9 @@ fn main() {
 
     for line in content.lines() {
         // replace numbers
-        let replaced_line = replace_string_with_numbers(line);
-        let calibration_value: u32 = get_calibration_value(&replaced_line);
-        sum_part2 += calibration_value;
+        let (first, _) = get_first_last(&replace_string_with_numbers(line, copy_string));
+        let (last, _) = get_first_last(&replace_string_with_numbers(line, reverse_string));
+        sum_part2 += first * 10 + last;
     }
     println!("Sum Part 2 {}", sum_part2);
 }
@@ -67,15 +71,23 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_reverse_string() {
+        assert_eq!(reverse_string(&"abf"), "fba");
+    }
+    #[test]
+    fn test_copy_string() {
+        assert_eq!(copy_string(&"abf"), "abf");
+    }
+
+    #[test]
     fn test_replace_string_with_numbers() {
-        assert_eq!(replace_string_with_numbers(&"abfive12cd34ef"), "ab512cd34ef");
-        assert_eq!(replace_string_with_numbers(&"abfiveight12cd34ef"), "ab5812cd34ef");
-        assert_eq!(replace_string_with_numbers(&"abfive12cd34oneeightf"), "ab512cd3418f");
+        assert_eq!(replace_string_with_numbers(&"abfive12cd34oneightf", reverse_string), "f8no43dc215ba");
+        assert_eq!(replace_string_with_numbers(&"abfive12cd34oneightf", copy_string), "ab512cd341ightf");
 
     }
 
     #[test]
-    fn test_get_calibration_value() {
-        assert_eq!(get_calibration_value(&"ab12cd34ef"), 14);
+    fn test_get_first_last() {
+        assert_eq!(get_first_last(&"ab12cd34ef"), (1,4));
     }
 }
