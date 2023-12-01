@@ -14,6 +14,8 @@ Once you have them installed, you can build the solutions with:
 ```
 cargo build
 ```
+After building, you can find each day's solution in target/debug path.
+But before running that, read the next section!
 
 ## Usage
 Each solution downloads the input itself. Therefore you need to set your AOC
@@ -24,3 +26,5 @@ cookie, set it as:
 export AOC_SESSION_COOKIE=your-session-cookie
 ```
 Thats it, now you can run each solutions and check the results :-)
+> How would I get this session cookie? Follow
+[this](https://support.pentest-tools.com/en/scans-tools/how-to-get-the-session-cookie)!
