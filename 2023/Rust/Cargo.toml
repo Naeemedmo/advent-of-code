@@ -1,0 +1,13 @@
+[package]
+name = "Rust"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+curl = "0.4.44"
+regex = "1.8.4"
+[lib]
+name = "input_extractor"
+path = "../../2022/src/lib/lib.rs"
