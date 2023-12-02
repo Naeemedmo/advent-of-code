@@ -2,6 +2,19 @@ use input_extractor::get::{get_input, AoCDate};
 extern crate regex;
 use regex::{Captures, Regex};
 
+// For a better solution:
+// static LEADING: Lazy<Regex> = Lazy::new(|| {
+//     Regex::new(r"(one|1|two|2|three|3|four|4|five|5|six|6|seven|7|eight|8|nine|9)")
+//         .expect("Invalid regex")
+// });
+// static TRAILING: Lazy<Regex> = Lazy::new(|| {
+//     Regex::new(r"(?:.*)(one|1|two|2|three|3|four|4|five|5|six|6|seven|7|eight|8|nine|9)")
+//         .expect("Invalid regex")
+// });
+// Greedy: *, +, and ?, take as much as possible without invalidating the pattern
+// Lazy: *?, +?, and ??, take as little as possible without invalidating the pattern
+
+
 fn get_first_last(signal: &str) -> (u32, u32) {
     const RADIX: u32 = 10;
 
