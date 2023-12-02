@@ -33,7 +33,7 @@ fn main() {
     let id_re = Regex::new(r"Game (\d+)").unwrap();
     let game_re = Regex::new(r"(\d+)\s*(blue|green|red)").unwrap();
 
-    'outer: for line in content.lines() {
+    for line in content.lines() {
         // Get Id
         let parts = line.split(":").collect::<Vec<&str>>();
         let game_number: u32;
