@@ -14,7 +14,6 @@ use regex::{Captures, Regex};
 // Greedy: *, +, and ?, take as much as possible without invalidating the pattern
 // Lazy: *?, +?, and ??, take as little as possible without invalidating the pattern
 
-
 fn get_first_last(signal: &str) -> (u32, u32) {
     const RADIX: u32 = 10;
 
@@ -24,7 +23,6 @@ fn get_first_last(signal: &str) -> (u32, u32) {
     (first, last)
 }
 
-
 fn reverse_string(input: &str) -> String {
     input.chars().rev().collect::<String>()
 }
@@ -33,27 +31,30 @@ fn copy_string(input: &str) -> String {
     input.to_string()
 }
 
-
-fn replace_string_with_numbers(line: &str, action: impl Fn(&str) -> String ) -> String {
-
-    let pattern = format!("({})", action("one|two|three|four|five|six|seven|eight|nine"));
+fn replace_string_with_numbers(line: &str, action: impl Fn(&str) -> String) -> String {
+    let pattern = format!(
+        "({})",
+        action("one|two|three|four|five|six|seven|eight|nine")
+    );
 
     let re = Regex::new(&pattern).unwrap();
-    let replaced_line = re.replace_all(&action(line), |cap: &Captures| {
-        match action(&cap[0]).as_str() {
-            "one" => "1",
-            "two" => "2",
-            "three" => "3",
-            "four" => "4",
-            "five" => "5",
-            "six" => "6",
-            "seven" => "7",
-            "eight" => "8",
-            "nine" => "9",
-            _ => panic!("We should never get here!"),
-        }
-        .to_string()
-    }).to_string();
+    let replaced_line = re
+        .replace_all(&action(line), |cap: &Captures| {
+            match action(&cap[0]).as_str() {
+                "one" => "1",
+                "two" => "2",
+                "three" => "3",
+                "four" => "4",
+                "five" => "5",
+                "six" => "6",
+                "seven" => "7",
+                "eight" => "8",
+                "nine" => "9",
+                _ => panic!("We should never get here!"),
+            }
+            .to_string()
+        })
+        .to_string();
     replaced_line
 }
 
@@ -63,7 +64,7 @@ fn main() {
 
     for line in content.lines() {
         // First remove all non digits
-        let (first, last)= get_first_last(line);
+        let (first, last) = get_first_last(line);
         sum_part1 += first * 10 + last;
     }
     println!("Sum Part 1 {}", sum_part1);
@@ -94,13 +95,18 @@ mod tests {
 
     #[test]
     fn test_replace_string_with_numbers() {
-        assert_eq!(replace_string_with_numbers(&"abfive12cd34oneightf", reverse_string), "f8no43dc215ba");
-        assert_eq!(replace_string_with_numbers(&"abfive12cd34oneightf", copy_string), "ab512cd341ightf");
-
+        assert_eq!(
+            replace_string_with_numbers(&"abfive12cd34oneightf", reverse_string),
+            "f8no43dc215ba"
+        );
+        assert_eq!(
+            replace_string_with_numbers(&"abfive12cd34oneightf", copy_string),
+            "ab512cd341ightf"
+        );
     }
 
     #[test]
     fn test_get_first_last() {
-        assert_eq!(get_first_last(&"ab12cd34ef"), (1,4));
+        assert_eq!(get_first_last(&"ab12cd34ef"), (1, 4));
     }
 }

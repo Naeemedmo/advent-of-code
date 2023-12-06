@@ -10,9 +10,9 @@ fn is_round_possible(color_round: HashMap<String, u32>) -> usize {
     let n_red = color_round.get("red").unwrap_or(&0);
 
     if n_blue > &14 || n_green > &13 || n_red > &12 {
-        return 0
+        return 0;
     }
-    return 1
+    return 1;
 }
 
 fn game_power(min_needed: HashMap<String, u32>) -> u32 {
@@ -23,7 +23,7 @@ fn game_power(min_needed: HashMap<String, u32>) -> u32 {
     n_blue = cmp::max(&1, n_blue);
     n_green = cmp::max(&1, n_green);
     n_red = cmp::max(&1, n_red);
-    return n_blue * n_red * n_green
+    return n_blue * n_red * n_green;
 }
 
 fn main() {
@@ -48,7 +48,7 @@ fn main() {
         min_needed.insert("blue".to_string(), 0);
         min_needed.insert("green".to_string(), 0);
         min_needed.insert("red".to_string(), 0);
-        let mut count_possibility : usize = 0;
+        let mut count_possibility: usize = 0;
 
         for round in &rounds {
             let mut color_counts = HashMap::new();
@@ -65,7 +65,6 @@ fn main() {
             sum_part1 += game_number
         }
         sum_part2 += game_power(min_needed);
-
     }
     println!("Part 1 {}", sum_part1);
     println!("Part 2 {}", sum_part2);

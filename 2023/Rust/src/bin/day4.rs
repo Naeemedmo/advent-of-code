@@ -21,7 +21,7 @@ fn part_one_two(input: &str) -> (i32, i32) {
         }
     }
 
-    return (total, cards.iter().sum())
+    return (total, cards.iter().sum());
 }
 
 fn main() {
@@ -29,7 +29,6 @@ fn main() {
     let (one, two) = part_one_two(&content);
     println!("Sum part 1: {} 2: {}", one, two);
 }
-
 
 #[cfg(test)]
 mod tests {
