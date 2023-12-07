@@ -1,30 +1,42 @@
 use input_extractor::get::{get_input, AoCDate};
+use num_traits::{FromPrimitive, PrimInt};
+use std::ops::{AddAssign, MulAssign};
 
-fn ways_to_beat(times: &Vec<u64>, distances: &Vec<u64>) -> u64 {
-    let mut ways_to_beat = 1;
+
+fn ways_to_beat<T>(times: &[T], distances: &[T]) -> T
+where
+    T: Copy + Clone + PrimInt + FromPrimitive + MulAssign +  AddAssign,
+{
+    let mut n_ways_to_beat = T::from(1).unwrap(); // Initialize with 1 for multiplication
+
     for (&time, &distance) in times.iter().zip(distances.iter()) {
-        let mut speed = 0;
-        let mut n_possibility = 0;
+        let mut speed = T::from(0).unwrap();
+        let mut n_possibility = T::from(0).unwrap();
+
         while speed < time {
-            speed += 1;
+            speed += T::from(1).unwrap();
+
             if (time - speed) * speed > distance {
-                n_possibility += 1;
+                n_possibility += T::from(1).unwrap();
             }
         }
-        ways_to_beat *= n_possibility;
+
+        n_ways_to_beat *= n_possibility;
     }
-    ways_to_beat
+
+    n_ways_to_beat
 }
 
-fn part_one_two(input: &str) -> (u64, u64) {
+
+fn part_one_two(input: &str) -> (u32, u64) {
     let lines: Vec<String> = input.lines().map(String::from).collect();
-    let times: Vec<u64> = lines[0].split(":").collect::<Vec<&str>>()[1]
+    let times: Vec<u32> = lines[0].split(":").collect::<Vec<&str>>()[1]
         .split_whitespace()
-        .map(|s| s.parse::<u64>().unwrap())
+        .map(|s| s.parse::<u32>().unwrap())
         .collect();
-    let distances: Vec<u64> = lines[1].split(":").collect::<Vec<&str>>()[1]
+    let distances: Vec<u32> = lines[1].split(":").collect::<Vec<&str>>()[1]
         .split_whitespace()
-        .map(|s| s.parse::<u64>().unwrap())
+        .map(|s| s.parse::<u32>().unwrap())
         .collect();
     let sum_part1 = ways_to_beat(&times, &distances);
 
